@@ -40,8 +40,8 @@ class Board():
         # Generate the resources and numbering
         self.generateResources() 
         self.generateNumbering()        
-        self.vertices = np.zeros((self.radius*2 + 1, self.radius*2 + 1,6))
-        self.edges = np.zeros((self.radius*2 + 1, self.radius*2 + 1,6))
+        self.positions = np.zeros((self.radius*2 + 1, self.radius*2 + 1,6))
+        self.roads = np.zeros((self.radius*2 + 1, self.radius*2 + 1,6))
 
     def __str__(self):
         string = ""
@@ -81,8 +81,6 @@ class Board():
                 if col >= 0 and row >= 0 and -self.radius <= q+r <= self.radius:
                     self.resources[row,col] = resourceList.pop()
 
-
-
     def generateNumbering(self):
         """
         Add nubering to the hex.
@@ -100,8 +98,36 @@ class Board():
                 # Check for desert
                 if self.resources[row,col] > 1:
                     self.numbers[row,col] = numberList.pop()
+                else if self.resource[row,col] == 1:
+                    self.numbers[row,col] = -1 # Negative numbers denote robber
 
-    
+    def placeRoad(self,q,r,direction,ID):
+        """
+        This places a road on the map. The coordinates are q and r, and
+        the direction of the road is determined by direction. The owner of the
+        road is determined by ID.
+        """
+
+        pass
+
+    def placeSettlement(self,q,r,direction,ID):
+        """
+        This places a settlement on the map. The coordinates are q and r, and
+        the cardinal direction is determined by direction. The owner of the
+        settlement is determined by ID.
+        """
+
+        pass        
+
+    def placeCity(self,q,r,direction,ID):
+        """
+        This places a city on the map. The coordinates are q and r, and
+        the cardinal direction is determined by direction. The owner of the
+        city is determined by ID.
+        """
+
+        pass        
+
 
 # General Functions
 
