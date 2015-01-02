@@ -9,6 +9,20 @@ A module to handle the catan board generation and states.
 import numpy as np
 import random
 
+class Player:
+    """
+    A player has resources, roads, settlements, cities, development cards, and
+    victory points. Players receive and spend resources, and place pieces.
+    """
+    
+    numPlayers = 0;
+
+    def __init__(self):
+        # Add an ID to identify the player
+        self.ID = numPlayers
+        numPlayers += 1
+
+
 class Board():
     """
     Generate a catan board, handle player positions, hex numbering and 
