@@ -29,6 +29,14 @@ class RoadError(Exception):
     def __init__(self, message):
         self.message = message
 
+class PositionError(Exception):
+    """
+    Raise this exception when you cannot place a city or settlement.
+    """
+    def __init__(self, message):
+        self.message = message
+
+
 class Board():
     """
     Generate a catan board, handle player positions, hex numbering and 
@@ -129,6 +137,11 @@ class Board():
         the cardinal direction is determined by direction. The owner of the
         settlement is determined by ID.
         """
+        row, col = axialToMatrix(q,r,self.radius)
+        if self.positons[row,col,direction] == 0:
+            self.positions[row,col,direction] = ID
+        else:
+            raise PostionException("Unable to place piece at {0},{1},{2}".format(q,r,direction))
 
         pass        
 
@@ -138,6 +151,15 @@ class Board():
         the cardinal direction is determined by direction. The owner of the
         city is determined by ID.
         """
+        
+        row, col = axialToMatrix(q,r,self.radius)
+        if self.positons[row,col,direction] == 0:
+            self.positions[row,col,direction] = ID*10
+        else:
+            raise PostionException("Unable to place piece at {0},{1},{2}".format(q,r,direction))
+
+        pass        
+
 
         pass        
 
