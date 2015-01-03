@@ -22,6 +22,12 @@ class Player:
         self.ID = numPlayers
         numPlayers += 1
 
+class RoadError(Exception):
+    """
+    Raise this exception when you cannot place a road.
+    """
+    def __init__(self, message):
+        self.message = message
 
 class Board():
     """
@@ -42,6 +48,8 @@ class Board():
         self.generateNumbering()        
         self.positions = np.zeros((self.radius*2 + 1, self.radius*2 + 1,6))
         self.roads = np.zeros((self.radius*2 + 1, self.radius*2 + 1,6))
+
+        self.shape = self.resources.shape
 
     def __str__(self):
         string = ""
@@ -98,7 +106,7 @@ class Board():
                 # Check for desert
                 if self.resources[row,col] > 1:
                     self.numbers[row,col] = numberList.pop()
-                else if self.resource[row,col] == 1:
+                elif self.resources[row,col] == 1:
                     self.numbers[row,col] = -1 # Negative numbers denote robber
 
     def placeRoad(self,q,r,direction,ID):
@@ -107,8 +115,13 @@ class Board():
         the direction of the road is determined by direction. The owner of the
         road is determined by ID.
         """
+        row, col = axialToMatrix(q,r,self.radius)
+        if self.roads[row,col,direction] == 0:
+            self.roads[row,col,direction] = ID
+        else:
+            raise RoadException("Unable to place road at {0},{1},{2}".format(q,r,direction))
 
-        pass
+        
 
     def placeSettlement(self,q,r,direction,ID):
         """
